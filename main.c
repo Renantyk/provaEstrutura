@@ -110,7 +110,6 @@ int main() {
         printf("2. Listar Faturas\n");
         printf("3. Atualizar Status\n");
         printf("4. Remover Fatura\n");
-        printf("5. Sair\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
         
@@ -142,13 +141,10 @@ int main() {
                 raiz = removerFatura(raiz, nFatura);
                 printf("Fatura removida com sucesso!\n");
                 break;
-            case 5:
-                printf("Saindo...\n");
-                break;
             default:
-                printf("Opcao invalida!\n");
+                printf("Opcao nao existente\n");
         }
-    } while (opcao != 5);
+    } while (opcao != 4);
     
     return 0;
 }
