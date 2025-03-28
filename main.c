@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// criaçaõ dos elementos da fatura e elementos e elementos inseridos na fatura
 typedef struct Fatura {
     int nFatura;
     char data[50];
@@ -11,6 +12,7 @@ typedef struct Fatura {
     struct Fatura* right;
 } Fatura;
 
+// criação da fatura com atribuição de valores por ponteiro e criação dos nós filhos
 Fatura* criarFatura(int nFatura, const char* data, float vFatura, const char* status) {
     Fatura* novaFatura = (Fatura*)malloc(sizeof(Fatura));
     novaFatura->nFatura = nFatura;
@@ -22,18 +24,24 @@ Fatura* criarFatura(int nFatura, const char* data, float vFatura, const char* st
     return novaFatura;
 }
 
+
 Fatura* inserirFatura(Fatura* raiz, int nFatura, const char* data, float vFatura, const char* status) {
+    // caso nó não tenha filho
     if (raiz == NULL) {
         return criarFatura(nFatura, data, vFatura, status);
     }
+    // caso nó tenha 1 filho
     if (nFatura < raiz->nFatura) {
         raiz->left = inserirFatura(raiz->left, nFatura, data, vFatura, status);
-    } else {
+    } 
+    // caso nó tenha 2 filhos
+    else {
         raiz->right = inserirFatura(raiz->right, nFatura, data, vFatura, status);
     }
     return raiz;
 }
 
+// lista as faturas
 void listarFatura(Fatura* raiz) {
     if (raiz != NULL) {
         listarFatura(raiz->left);
@@ -42,6 +50,7 @@ void listarFatura(Fatura* raiz) {
     }
 }
 
+// verifica se a raiz e se a fatura existe, caso exista ele verifica se esta no nó esquerdo se não printa o direito
 Fatura* buscaFatura(Fatura* raiz, int nFatura) {
     if (raiz == NULL || raiz->nFatura == nFatura) {
         return raiz;
@@ -53,6 +62,7 @@ Fatura* buscaFatura(Fatura* raiz, int nFatura) {
     }
 }
 
+// ele checa se a fatura existe, se existir ele atribui o novo status ao status na fatura buscada
 void atualizacaoFatura(Fatura* raiz, int nFatura, const char* novoStatus) {
     Fatura* fatura = buscaFatura(raiz, nFatura);
     if (fatura != NULL) {
@@ -63,6 +73,7 @@ void atualizacaoFatura(Fatura* raiz, int nFatura, const char* novoStatus) {
     }
 }
 
+// seleciona a menor fatura
 Fatura* menorFatura(Fatura* raiz) {
     while (raiz->left != NULL) {
         raiz = raiz->left;
@@ -70,6 +81,7 @@ Fatura* menorFatura(Fatura* raiz) {
     return raiz;
 }
 
+// verifica se a raiz existe, caso exista verifica se percorre a arvore pela direita ou esquerda e da free na fatura selecionada
 Fatura* removerFatura(Fatura* raiz, int nFatura) {
     if (raiz == NULL) {
         return raiz;
